@@ -1,0 +1,137 @@
+{
+  "summary": {
+    "total": 21,
+    "pass": 18,
+    "warn": 1,
+    "fail": 2,
+    "time": 0.51
+  },
+  "tests": [
+    {
+      "name": "Kernel at r=0",
+      "status": "PASS",
+      "detail": "cubic_spline(0)=45.4728, wendland(0)=55.7042",
+      "time": 0.0
+    },
+    {
+      "name": "Kernel at r=2h (support boundary)",
+      "status": "PASS",
+      "detail": "Both kernels = 0 at r=2h (cs=0.00e+00, wc=0.00e+00)",
+      "time": 0.0
+    },
+    {
+      "name": "Kernel beyond support (r >> 2h)",
+      "status": "PASS",
+      "detail": "All kernel values = 0 for r >> 2h",
+      "time": 0.0
+    },
+    {
+      "name": "Kernel gradient at r=0",
+      "status": "PASS",
+      "detail": "Gradient finite at r=0: cs=0.0000, wc=-0.0000",
+      "time": 0.001
+    },
+    {
+      "name": "Kernel with h=0",
+      "status": "WARN",
+      "detail": "h=0 raised ZeroDivisionError (acceptable edge case)",
+      "time": 0.001
+    },
+    {
+      "name": "Kernel with h=1e6",
+      "status": "PASS",
+      "detail": "h=1e6 returned finite values: [4.54728409e-13 4.54728409e-13 4.54728402e-13]",
+      "time": 0.001
+    },
+    {
+      "name": "Density: single particle",
+      "status": "PASS",
+      "detail": "Single particle density = 45.4728",
+      "time": 0.0
+    },
+    {
+      "name": "Density: two overlapping particles",
+      "status": "PASS",
+      "detail": "Overlapping density = 90.9457 (both equal)",
+      "time": 0.0
+    },
+    {
+      "name": "Density: zero mass particles",
+      "status": "PASS",
+      "detail": "Zero mass density = [1.e-06 1.e-06] (finite, clamped)",
+      "time": 0.0
+    },
+    {
+      "name": "Density: huge mass (1e15)",
+      "status": "PASS",
+      "detail": "Huge mass density = 5.6841e+16 (finite)",
+      "time": 0.0
+    },
+    {
+      "name": "Sim: nominal dam break",
+      "status": "PASS",
+      "detail": "21 particles, 20 frames, all finite",
+      "time": 0.079
+    },
+    {
+      "name": "Sim: zero gravity (g=0)",
+      "status": "PASS",
+      "detail": "Zero gravity: all finite, particles spread from pressure",
+      "time": 0.064
+    },
+    {
+      "name": "Sim: extreme gravity (g=1e6)",
+      "status": "PASS",
+      "detail": "Extreme gravity (1e6): all finite",
+      "time": 0.017
+    },
+    {
+      "name": "Sim: zero viscosity (mu=0)",
+      "status": "PASS",
+      "detail": "Zero viscosity: all finite",
+      "time": 0.095
+    },
+    {
+      "name": "Sim: huge viscosity (mu=1e6)",
+      "status": "FAIL",
+      "detail": "NaN/Inf with huge viscosity",
+      "time": 0.036
+    },
+    {
+      "name": "Sim: zero pressure (k=0)",
+      "status": "PASS",
+      "detail": "Zero pressure: all finite (particles free-fall)",
+      "time": 0.062
+    },
+    {
+      "name": "Sim: extreme pressure (k=1e8)",
+      "status": "PASS",
+      "detail": "Extreme pressure (1e8): all finite",
+      "time": 0.016
+    },
+    {
+      "name": "Sim: tiny dt (1e-8)",
+      "status": "PASS",
+      "detail": "Tiny dt (1e-8): all finite, sim time = 1.00e-06",
+      "time": 0.035
+    },
+    {
+      "name": "Boundary containment",
+      "status": "FAIL",
+      "detail": "Particles escaped: x=[-4.312, 5.400], y=[-9.613, 16.160]",
+      "time": 0.09
+    },
+    {
+      "name": "Particle initializer: empty region",
+      "status": "PASS",
+      "detail": "Empty region produces 0 particles",
+      "time": 0.0
+    },
+    {
+      "name": "Surface tension: smoke test",
+      "status": "PASS",
+      "detail": "Surface tension forces all finite. Max |F| = 1.1469e+01",
+      "time": 0.0
+    }
+  ]
+}

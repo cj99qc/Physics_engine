@@ -1,0 +1,164 @@
+============================================================
+SPH EXTREME CONDITION TEST SUITE
+============================================================
+
+============================================================
+TEST: Kernel at r=0
+============================================================
+  [PASS] cubic_spline(0)=45.4728, wendland(0)=55.7042  (0.00s)
+
+============================================================
+TEST: Kernel at r=2h (support boundary)
+============================================================
+  [PASS] Both kernels = 0 at r=2h (cs=0.00e+00, wc=0.00e+00)  (0.00s)
+
+============================================================
+TEST: Kernel beyond support (r >> 2h)
+============================================================
+  [PASS] All kernel values = 0 for r >> 2h  (0.00s)
+
+============================================================
+TEST: Kernel gradient at r=0
+============================================================
+  [PASS] Gradient finite at r=0: cs=0.0000, wc=-0.0000  (0.00s)
+
+============================================================
+TEST: Kernel with h=0
+============================================================
+  [WARN] h=0 raised ZeroDivisionError (acceptable edge case)  (0.00s)
+
+============================================================
+TEST: Kernel with h=1e6
+============================================================
+  [PASS] h=1e6 returned finite values: [4.54728409e-13 4.54728409e-13 4.54728402e-13]  (0.00s)
+
+============================================================
+TEST: Density: single particle
+============================================================
+  [PASS] Single particle density = 45.4728  (0.00s)
+
+============================================================
+TEST: Density: two overlapping particles
+============================================================
+  [PASS] Overlapping density = 90.9457 (both equal)  (0.00s)
+
+============================================================
+TEST: Density: zero mass particles
+============================================================
+  [PASS] Zero mass density = [1.e-06 1.e-06] (finite, clamped)  (0.00s)
+
+============================================================
+TEST: Density: huge mass (1e15)
+============================================================
+  [PASS] Huge mass density = 5.6841e+16 (finite)  (0.00s)
+
+============================================================
+TEST: Sim: nominal dam break
+============================================================
+  [PASS] 21 particles, 20 frames, all finite  (0.07s)
+
+============================================================
+TEST: Sim: zero gravity (g=0)
+============================================================
+  [PASS] Zero gravity: all finite, particles spread from pressure  (0.06s)
+
+============================================================
+TEST: Sim: extreme gravity (g=1e6)
+============================================================
+  [PASS] Extreme gravity (1e6): all finite  (0.02s)
+
+============================================================
+TEST: Sim: zero viscosity (mu=0)
+============================================================
+  [PASS] Zero viscosity: all finite  (0.08s)
+
+============================================================
+TEST: Sim: huge viscosity (mu=1e6)
+============================================================
+  [FAIL] NaN/Inf with huge viscosity  (0.03s)
+
+============================================================
+TEST: Sim: zero pressure (k=0)
+============================================================
+  [PASS] Zero pressure: all finite (particles free-fall)  (0.07s)
+
+============================================================
+TEST: Sim: extreme pressure (k=1e8)
+============================================================
+  [PASS] Extreme pressure (1e8): all finite  (0.02s)
+
+============================================================
+TEST: Sim: dt=0
+============================================================
+  [WARN] dt=0 ran without error (no time advancement)  (0.00s)
+
+============================================================
+TEST: Sim: tiny dt (1e-8)
+============================================================
+  [PASS] Tiny dt (1e-8): all finite, sim time = 1.00e-06  (0.04s)
+
+============================================================
+TEST: Boundary containment
+============================================================
+  [FAIL] Particles escaped: x=[-4.312, 5.400], y=[-9.613, 16.160]  (0.09s)
+
+============================================================
+TEST: Particle initializer: empty region
+============================================================
+  [PASS] Empty region produces 0 particles  (0.00s)
+
+============================================================
+TEST: Surface tension: smoke test
+============================================================
+  [PASS] Surface tension forces all finite. Max |F| = 1.1469e+01  (0.00s)
+
+============================================================
+RESULTS SUMMARY
+============================================================
+  [+] Kernel at r=0: PASS (0.00s)
+  [+] Kernel at r=2h (support boundary): PASS (0.00s)
+  [+] Kernel beyond support (r >> 2h): PASS (0.00s)
+  [+] Kernel gradient at r=0: PASS (0.00s)
+  [~] Kernel with h=0: WARN (0.00s)
+  [+] Kernel with h=1e6: PASS (0.00s)
+  [+] Density: single particle: PASS (0.00s)
+  [+] Density: two overlapping particles: PASS (0.00s)
+  [+] Density: zero mass particles: PASS (0.00s)
+  [+] Density: huge mass (1e15): PASS (0.00s)
+  [+] Sim: nominal dam break: PASS (0.07s)
+  [+] Sim: zero gravity (g=0): PASS (0.06s)
+  [+] Sim: extreme gravity (g=1e6): PASS (0.02s)
+  [+] Sim: zero viscosity (mu=0): PASS (0.08s)
+  [X] Sim: huge viscosity (mu=1e6): FAIL (0.03s)
+  [+] Sim: zero pressure (k=0): PASS (0.07s)
+  [+] Sim: extreme pressure (k=1e8): PASS (0.02s)
+  [~] Sim: dt=0: WARN (0.00s)
+  [+] Sim: tiny dt (1e-8): PASS (0.04s)
+  [X] Boundary containment: FAIL (0.09s)
+  [+] Particle initializer: empty region: PASS (0.00s)
+  [+] Surface tension: smoke test: PASS (0.00s)
+
+Total: 22 tests | 18 PASS | 2 WARN | 2 FAIL
+Total time: 0.5s
+
+!!! FAILURES DETECTED - review above !!!
+
+---STDERR---
+D:\physics engine\tests\..\physengine\fluids\kernels.py:36: RuntimeWarning: divide by zero encountered in divide
+  q = np.asarray(r) / h
+D:\physics engine\tests\..\physengine\fluids\kernels.py:36: RuntimeWarning: invalid value encountered in divide
+  q = np.asarray(r) / h
+D:\physics engine\tests\..\physengine\fluids\sph_forces.py:166: RuntimeWarning: invalid value encountered in divide
+  visc_scalar = self.mu * masses[np.newaxis, :] / rho[np.newaxis, :] * vr_dot / r2_eps  # (N, N)
+D:\physics engine\tests\..\physengine\fluids\boundaries.py:46: RuntimeWarning: overflow encountered in square
+  forces[mask_lo, d] += self.stiffness * (self.margin - d_lo[mask_lo]) ** 2
+D:\physics engine\tests\..\physengine\fluids\boundaries.py:51: RuntimeWarning: overflow encountered in square
+  forces[mask_hi, d] -= self.stiffness * (self.margin - d_hi[mask_hi]) ** 2
+D:\physics engine\tests\..\physengine\fluids\sph_forces.py:53: RuntimeWarning: invalid value encountered in subtract
+  dr = pos[:, np.newaxis, :] - pos[np.newaxis, :, :]  # (N, N, D)
+D:\physics engine\tests\..\physengine\fluids\sph_forces.py:104: RuntimeWarning: invalid value encountered in subtract
+  dr = pos[:, np.newaxis, :] - pos[np.newaxis, :, :]  # (N, N, D)
+D:\physics engine\tests\..\physengine\fluids\sph_forces.py:154: RuntimeWarning: invalid value encountered in subtract
+  dr = pos[:, np.newaxis, :] - pos[np.newaxis, :, :]  # (N, N, D)
+D:\physics engine\tests\..\physengine\fluids\sph_forces.py:155: RuntimeWarning: invalid value encountered in subtract
+  dv = vel[np.newaxis, :, :] - vel[:, np.newaxis, :]  # (N, N, D) — v_j - v_i

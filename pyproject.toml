@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=67", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "physengine"
+version = "0.1.0"
+description = "Modular particle simulation engine for scientific research"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+hdf5 = ["h5py>=3.8"]
+dev  = ["pytest>=7", "black>=23", "mypy>=1.4", "ruff>=0.1"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["physengine*"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
